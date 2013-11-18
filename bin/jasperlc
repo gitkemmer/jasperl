@@ -4,12 +4,14 @@ use 5.010;
 use strict;
 use warnings;
 
-use JasPerl::Compiler::JspParser;
-use JasPerl::Compiler::PageGenerator;
-
 use Data::Dumper;
 
 # VERSION
+
+use JasPerl::Compiler::JspParser;
+use JasPerl::Compiler::PageGenerator;
+
+my $runtime = JasPerlCRuntime->new();
 
 my $parser = JasPerl::Compiler::JspParser->new();
 
@@ -34,6 +36,26 @@ if (@ARGV) {
     }
     say "parsing took ", int ((time - $t) / 100 * 1000), " ms.";
 }
+
+package JasPerlCRuntime;
+
+use JasPerl::Bean;
+
+with qw(JasPerl::Runtime);
+
+sub get_request_dispatcher {
+}
+
+sub get_compiler {
+    my ($self, $path) = @_;
+    return JasPerl::JspCompiler->new($self->get_real_path($path));
+}
+
+sub get_real_path {
+    my ($self, $path) = @_;
+    return $path;
+}
+
 
 __END__
 

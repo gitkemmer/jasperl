@@ -6,6 +6,10 @@ package JasPerl::Compiler;
 
 # VERSION
 
+use JasPerl::Role;
+
+requires qw(compile include);
+
 1;
 
 __END__

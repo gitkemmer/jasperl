@@ -2,49 +2,41 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::Runtime;
+package JasPerl::JspConfig;
 
 # VERSION
 
-use JasPerl::JspConfig;
+use JasPerl::Bean;
 
-use JasPerl::Role;
-
-with qw(JasPerl::Util::Attributes);
-
-has [ qw(jspConfig contextPath serverInfo) ];
-
-requires qw(get_request_dispatcher);
-
-sub _build_context_path {
-    return '';
+sub get_buffer {
+    return '4kb';
 }
 
-sub _build_jsp_config {
-    return JasPerl::JspConfig->new();
+sub get_default_content_type {
+    return 'text/html';
 }
 
-sub _build_server_info {
-    # TODO: NAME/VERSION
-    return ref $_[0];
+sub get_page_encoding {
+    return 'ISO-8859-1';
 }
 
-sub get_compiler {
+sub is_el_ignored {
+    return 0;
 }
 
-sub get_context {
-    return $_[0];
+sub is_jsp_page {
+    my ($self, $path) = @_;
+    return $path =~ /\.jsp[fx]?$/;
 }
 
-sub get_mime_type {
+sub is_trim_directive_whitespace {
+    return 0;
 }
 
-sub get_real_path {
+sub is_xml {
+    my ($self, $path) = @_;
+    return $path =~ /\.jspx$/
 }
-
-# TODO: get_named_dispatcher
-# TODO: get_ressource/_as_stream
-# TODO: log
 
 1;
 
@@ -52,11 +44,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::Runtime - <One line description of module's purpose>
+JasPerl::JspConfig - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::Runtime;
+use JasPerl::JspConfig;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).
