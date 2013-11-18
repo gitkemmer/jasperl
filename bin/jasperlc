@@ -1,0 +1,102 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use JasPerl::Compiler::JspParser;
+use JasPerl::Compiler::PageGenerator;
+
+use Data::Dumper;
+
+# VERSION
+
+my $parser = JasPerl::Compiler::JspParser->new();
+
+if (@ARGV) {
+    my $page = $parser->parse_file(shift);
+
+    my $dumper = Data::Dumper->new([ $page ]);
+    $dumper->Terse(1);
+    $dumper->Indent(1);
+    #say STDERR $dumper->Dump;
+
+    my $gen = JasPerl::Compiler::PageGenerator->new();
+    $gen->generate($page);
+
+} else {
+    my $page = join('', <>);
+    say "parsing STDIN...";
+
+    my $t = time();
+    for (my $i = 0; $i != 100; $i++) {
+        $parser->parse($page);
+    }
+    say "parsing took ", int ((time - $t) / 100 * 1000), " ms.";
+}
+
+__END__
+
+use JasPerl::Compiler::JspCompilationContext;
+
+use File::Spec;
+use Getopt::Long;
+use Pod::Usage;
+
+my $srcdir = File::Spec->curdir;
+my $destdir = File::Spec->curdir;
+my $verbose = 0;
+
+# my $failonerror;
+# my $uribase;
+# my $uriroot;
+
+GetOptions(
+    'srcdir|s=s' => \$srcdir,
+    'destdir|d=s' => \$destdir,
+    'verbose|v' => \$verbose,
+    'help|?' => sub { pod2usage(1) }
+) or pod2usage(2);
+
+my $context = JasPerl::Compiler::JspCompilationContext->new(
+    srcdir => File::Spec->rel2abs($srcdir),
+    libdir => File::Spec->rel2abs($destdir),
+    parser => 'JasPerl::Compiler::SimpleParser'
+);
+
+foreach my $file (@ARGV) {
+    my $path = File::Spec->abs2rel(File::Spec->rel2abs($file), File::Spec->rel2abs($srcdir));
+    # print STDERR "path: ", $path, "\n";
+    # print STDERR "real path: ", $config->real_path($path), "\n";
+    # print STDERR "module name: ", $config->module_name($path), "\n";
+    # print STDERR "module path: ", $config->module_path($path), "\n";
+
+    my $compiler = $context->get_compiler();
+    $compiler->compile($path);
+}
+
+__END__
+
+=head1 NAME
+
+jasperlc - precompile JSP source files into Perl modules
+
+=head1 SYNOPSIS
+
+jasperlc [OPTION]... FILE...
+jasperlc [OPTION]... --webapp DIR
+
+Options:
+  -c, --class=NAME      target class name (???)
+  -d, --destdir=DIR     output directory
+  -l, --list-errors     output the name of the JSP page upon failure
+  -L, --libdir=DIR
+  -p, --package=NAME    name of target package
+  -s, --show-success    output the name of the JSP page upon success
+      --trim-spaces     trim spaces in template text
+      --uribase=DIR     uri context of relative URI references in the JSP pages
+      --uriroot=DIR     root directory that uri files should be resolved against
+      --webapp=DIR      directory containing web application
+  -v, --verbose         explain what is being done
+      --help            display this help and exit
+      --version         output version information and exit
