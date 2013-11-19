@@ -6,7 +6,7 @@ package JasPerl::ResponseWrapper;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 # TODO: IllegalArgumentException - if the response is null
 has response => (

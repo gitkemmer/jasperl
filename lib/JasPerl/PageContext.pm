@@ -35,7 +35,7 @@ use constant {
     SESSION     => 'javax.servlet.jsp.jspSession'
 };
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspContext);
 
@@ -393,7 +393,7 @@ sub get_attribute_names {
 package # hide from PAUSE
     JasPerl::PageContext::Writer;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspWriter);
 
@@ -462,7 +462,7 @@ sub BUILDARGS {
 package # hide from PAUSE
     JasPerl::PageContext::IncludeResponseWrapper;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 extends qw(JasPerl::ResponseWrapper);
 

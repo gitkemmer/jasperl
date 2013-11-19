@@ -6,7 +6,7 @@ package JasPerl::EL::VariableResolver;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(resolve_variable);
 

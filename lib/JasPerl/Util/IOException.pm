@@ -6,7 +6,7 @@ package JasPerl::Util::IOException;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 extends qw(JasPerl::Util::Exception);
 

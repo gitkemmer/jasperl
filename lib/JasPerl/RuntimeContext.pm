@@ -6,7 +6,7 @@ package JasPerl::RuntimeContext;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 with qw(JasPerl::Util::Attributes);
 
@@ -60,7 +60,7 @@ sub get_real_path {
 package # hide from PAUSE
     JasPerl::RuntimeContext::DefaultJspConfig;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspConfig);
 

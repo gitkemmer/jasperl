@@ -2,7 +2,7 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::Role;
+package JasPerl::Util::Role;
 
 use base qw(Moo::Role);
 
@@ -44,11 +44,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::Role - <One line description of module's purpose>
+JasPerl::Util::Role - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).

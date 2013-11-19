@@ -12,7 +12,7 @@ use constant {
     UNBOUNDED_BUFFER => -2
 };
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(clear flush write);
 

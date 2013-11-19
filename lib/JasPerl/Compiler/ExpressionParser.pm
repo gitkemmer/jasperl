@@ -19,7 +19,7 @@ my $RE = do {
     }xs
 };
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::EL::ExpressionEvaluator);
 

@@ -210,7 +210,7 @@ sub _evaluate {
     }
 }
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 has root => ( is => 'ro', required => 1 );
 

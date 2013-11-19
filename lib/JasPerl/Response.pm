@@ -59,7 +59,7 @@ use URI;
 use JasPerl::Util::Enumeration;
 use JasPerl::Util::Locale;
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(reset reset_buffer flush_buffer);
 

@@ -10,7 +10,7 @@ use Module::Runtime qw(is_module_spec use_module);
 use Import::Into;
 
 use JasPerl::TagExt::Tag ();
-use JasPerl::Role ();
+use JasPerl::Util::Role ();
 
 # VERSION
 
@@ -83,12 +83,12 @@ sub import {
         $class->_add_function($target, @_);
     };
 
-    JasPerl::Role->apply_roles_to_package($target, $class);
+    JasPerl::Util::Role->apply_roles_to_package($target, $class);
 }
 
 # Role interface
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 sub _build_tags {
     require JasPerl::TagExt::TagInfo;

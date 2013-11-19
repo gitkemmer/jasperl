@@ -4,7 +4,7 @@ use warnings;
 
 package JasPerl::TagExt::Tag;
 
-use base qw(JasPerl::Bean);
+use base qw(JasPerl::Util::Bean);
 
 use Import::Into;
 
@@ -17,11 +17,11 @@ sub import {
     my $target = caller;
 
     $INFO{$target} = { };
-    JasPerl::Bean->import::into($target);
-    JasPerl::Role->apply_roles_to_package($target, $class);
+    JasPerl::Util::Bean->import::into($target);
+    JasPerl::Util::Role->apply_roles_to_package($target, $class);
 
     # FIXME: error on redefine
-    JasPerl::Role->apply_roles_to_object(
+    JasPerl::Util::Role->apply_roles_to_object(
         $class->_accessor_maker_for($target),
         'Method::Generate::Accessor::Role::JasPerl::Tag'
     );
@@ -29,7 +29,7 @@ sub import {
 
 # Role interface
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 #with qw(JasPerl::TagExt::JspTag);
 

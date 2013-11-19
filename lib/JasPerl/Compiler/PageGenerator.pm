@@ -29,7 +29,7 @@ use warnings;
 .
 
 my $PAGE_BODY = <<'.';
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspPage);
 
@@ -56,7 +56,7 @@ sub _jsp_service {
 }
 .
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::Util::Attributes);
 

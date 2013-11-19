@@ -6,7 +6,7 @@ package JasPerl::TagExt::SimpleTagSupport;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 with qw(JasPerl::TagExt::JspTag);
 

@@ -6,7 +6,7 @@ package JasPerl::Util::Comparable;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(compare_to);
 

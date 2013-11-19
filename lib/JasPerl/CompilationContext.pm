@@ -37,7 +37,7 @@ use constant JSP_VERSION => "jasperl.compiler.page.jspVersion";
 
 my @SCOPES = ( FILE_SCOPE, PAGE_SCOPE, APPLICATION_SCOPE );
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspContext);
 

@@ -8,7 +8,7 @@ use JasPerl::TagExt::TagAttributeInfo;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 use constant {
     BODY_CONTENT_EMPTY         => 'empty',

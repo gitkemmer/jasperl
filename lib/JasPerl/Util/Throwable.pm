@@ -8,7 +8,7 @@ package JasPerl::Util::Throwable;
 
 use JasPerl::Util::StackTraceElement;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 use Scalar::Util qw(blessed);
 

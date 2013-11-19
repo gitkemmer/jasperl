@@ -6,7 +6,7 @@ package JasPerl::JspConfig;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 sub get_buffer {
     return '4kb';

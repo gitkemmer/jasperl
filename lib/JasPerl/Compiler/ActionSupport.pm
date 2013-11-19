@@ -31,7 +31,7 @@ my %BODY_CONTENT = (
     }
 );
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 sub _make_attributes {
     return { map { $_->{name} => $_->{value} } @{$_[0]} };

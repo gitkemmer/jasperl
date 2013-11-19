@@ -6,7 +6,7 @@ package JasPerl::TagExt::TagLibraryInfo;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 has uri => ( is => 'ro' );
 

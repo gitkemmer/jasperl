@@ -6,7 +6,7 @@ package JasPerl::TagExt::JspTag;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(set_jsp_body do_tag BODY_CONTENT);
 

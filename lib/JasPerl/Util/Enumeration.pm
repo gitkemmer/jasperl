@@ -6,7 +6,7 @@ package JasPerl::Util::Enumeration;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(next has_next);
 
@@ -41,7 +41,7 @@ package # hide from PAUSE
 
 use JasPerl::Util::NoSuchElementException;
 
-JasPerl::Role->apply_roles_to_package(
+JasPerl::Util::Role->apply_roles_to_package(
     __PACKAGE__, qw(JasPerl::Util::Enumeration)
 );
 

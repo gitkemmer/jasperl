@@ -6,7 +6,7 @@ package JasPerl::TagExt::FunctionInfo;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 has [ qw(name class signature) ] => ( is => 'ro', required => 1 );
 

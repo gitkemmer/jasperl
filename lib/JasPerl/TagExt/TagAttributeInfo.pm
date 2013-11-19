@@ -6,7 +6,7 @@ package JasPerl::TagExt::TagAttributeInfo;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 has name => ( is => 'ro', required => 1 );
 

@@ -6,7 +6,7 @@ package JasPerl::Util::Cloneable;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 use JasPerl::Util::CloneNotSupportedException;
 
 use Scalar::Util qw(reftype);

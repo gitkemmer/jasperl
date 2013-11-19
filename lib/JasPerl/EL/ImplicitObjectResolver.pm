@@ -8,7 +8,7 @@ package JasPerl::EL::ImplicitObjectResolver;
 
 use JasPerl::PageContext;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::EL::VariableResolver);
 
@@ -151,7 +151,7 @@ sub release {
 package # hide from PAUSE
     JasPerl::EL::ImplicitObjectResolver::ScopeHash;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 has '_context' => ( is => 'ro', weak_ref => 1 );
 has '_scope' => ( is => 'ro' );

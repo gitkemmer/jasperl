@@ -6,7 +6,7 @@ package JasPerl::JspContext;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw{
     get_attribute set_attribute remove_attribute
@@ -59,7 +59,7 @@ sub pop_body {
 package # hide from PAUSE
     JasPerl::JspContext::UnbufferedWriter;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 use JasPerl::JspWriter; # NO_BUFFER
 

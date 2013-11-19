@@ -6,7 +6,7 @@ package JasPerl::TagExt::DynamicAttributes;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(set_dynamic_attribute);
 

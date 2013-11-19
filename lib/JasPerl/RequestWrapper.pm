@@ -6,7 +6,7 @@ package JasPerl::RequestWrapper;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 # TODO: IllegalArgumentException - if the request is null
 has request => (

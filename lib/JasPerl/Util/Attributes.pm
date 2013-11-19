@@ -6,7 +6,7 @@ package JasPerl::Util::Attributes;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 use JasPerl::Util::Enumeration;
 use JasPerl::Util::NullPointerException;
 

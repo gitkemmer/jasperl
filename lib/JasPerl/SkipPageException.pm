@@ -6,7 +6,7 @@ package JasPerl::SkipPageException;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 extends qw(JasPerl::JspException);
 

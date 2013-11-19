@@ -18,7 +18,7 @@ my $RE = do {
     }xs
 };
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 sub parse {
     my ($self, $page) = @_;

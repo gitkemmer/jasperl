@@ -12,7 +12,7 @@ BEGIN {
 {
     package Resolver;
 
-    use JasPerl::Bean;
+    use JasPerl::Util::Bean;
 
     with qw{
         JasPerl::EL::FunctionMapper

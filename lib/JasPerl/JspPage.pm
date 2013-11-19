@@ -8,7 +8,7 @@ use JasPerl::Util::Enumeration;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(_jsp_service);
 

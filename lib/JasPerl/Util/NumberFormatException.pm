@@ -6,7 +6,7 @@ package JasPerl::Util::NumberFormatException;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 extends qw(JasPerl::Util::Exception);
 

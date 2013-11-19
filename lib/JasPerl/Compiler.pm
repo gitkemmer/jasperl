@@ -6,7 +6,7 @@ package JasPerl::Compiler;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(compile include);
 

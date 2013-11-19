@@ -6,7 +6,7 @@ package JasPerl::EL::ExpressionEvaluator;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw(parse_expression);
 

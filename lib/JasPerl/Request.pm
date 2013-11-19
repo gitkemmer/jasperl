@@ -16,7 +16,7 @@ use constant {
 
 use JasPerl::Util::Enumeration;
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 with qw(JasPerl::Util::Attributes);
 

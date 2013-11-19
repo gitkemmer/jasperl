@@ -6,7 +6,7 @@ package JasPerl::JspFactory;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 requires qw{
     get_page_context
@@ -33,7 +33,7 @@ package # hide from PAUSE
 use JasPerl::CompilationContext;
 use JasPerl::PageContext;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspFactory);
 

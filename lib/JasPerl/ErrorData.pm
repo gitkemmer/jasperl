@@ -8,7 +8,7 @@ package JasPerl::ErrorData;
 
 use JasPerl::RequestDispatcher;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 has requestUri => ( is => 'ro', required => 1 );
 has servletName => ( is => 'ro', required => 1 );

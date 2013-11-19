@@ -27,7 +27,7 @@ my $MODULE_PERL_VERSION = '5.010';
 my @PRAGMAS = qw(5.010 strict warnings);
 
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 with qw(JasPerl::Compiler);
 

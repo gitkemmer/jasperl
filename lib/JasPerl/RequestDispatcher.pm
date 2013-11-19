@@ -6,7 +6,7 @@ package JasPerl::RequestDispatcher;
 
 # VERSION
 
-use JasPerl::Role;
+use JasPerl::Util::Role;
 
 use constant {
     ERROR_EXCEPTION      => "javax.servlet.error.exception",

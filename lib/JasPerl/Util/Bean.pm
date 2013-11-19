@@ -2,7 +2,7 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::Bean;
+package JasPerl::Util::Bean;
 
 use base qw(Moo);
 
@@ -35,11 +35,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::Bean - <One line description of module's purpose>
+JasPerl::Util::Bean - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).
