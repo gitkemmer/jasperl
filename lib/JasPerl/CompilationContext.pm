@@ -2,7 +2,7 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::Compiler::JspCompilationContext;
+package JasPerl::CompilationContext;
 
 # VERSION
 
@@ -13,23 +13,23 @@ use Module::Runtime;
 
 use constant {
     FILE_SCOPE        => 'file',
-    PAGE_SCOPE        => 'page',
+    COMPILE_SCOPE     => 'compile',
     APPLICATION_SCOPE => 'application',
 };
 
 # page directive
 use constant {
-    AUTO_FLUSH     => "jasperl.compiler.page.autoFlush",
-    BUFFER         => "jasperl.compiler.page.buffer",
-    CONTENT_TYPE   => "jasperl.compiler.page.contentType",
-    ERROR_PAGE     => "jasperl.compiler.page.errorPage",
-    EXTENDS        => "jasperl.compiler.page.extends",
-    INFO           => "jasperl.compiler.page.info",
-    IS_EL_IGNORED  => "jasperl.compiler.page.isELIgnored",
-    IS_ERROR_PAGE  => "jasperl.compiler.page.isErrorPage",
-    IS_THREAD_SAFE => "jasperl.compiler.page.isThreadSafe",
-    PAGE_ENCODING  => "jasperl.compiler.page.pageEncoding",
-    SESSION        => "jasperl.compiler.page.session"
+    AUTO_FLUSH     => "jasperl.page.autoFlush",
+    BUFFER         => "jasperl.page.buffer",
+    CONTENT_TYPE   => "jasperl.page.contentType",
+    ERROR_PAGE     => "jasperl.page.errorPage",
+    EXTENDS        => "jasperl.page.extends",
+    INFO           => "jasperl.page.info",
+    IS_EL_IGNORED  => "jasperl.page.isELIgnored",
+    IS_ERROR_PAGE  => "jasperl.page.isErrorPage",
+    IS_THREAD_SAFE => "jasperl.page.isThreadSafe",
+    PAGE_ENCODING  => "jasperl.page.pageEncoding",
+    SESSION        => "jasperl.page.session"
 };
 
 # root action
@@ -53,7 +53,7 @@ sub _build_config {
 
 sub _build__attributes {
     my $self = shift;
-    return JasPerl::Compiler::JspCompilationContext::Attributes->new(
+    return JasPerl::CompilationContext::Attributes->new(
         #CONFIG()      => $self->get_config(),
         #OUT()         => $self->get_out(),
     );
@@ -243,7 +243,7 @@ sub get_out_var {
 }
 
 package # hide from PAUSE
-    JasPerl::Compiler::JspCompilationContext::Attributes;
+    JasPerl::CompilationContext::Attributes;
 
 use JasPerl::Util::Enumeration;
 
@@ -278,11 +278,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::Compiler::JspCompilationContext - <One line description of module's purpose>
+JasPerl::CompilationContext - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::Compiler::JspCompilationContext;
+use JasPerl::CompilationContext;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).

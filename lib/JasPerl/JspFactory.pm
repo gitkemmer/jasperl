@@ -8,9 +8,15 @@ package JasPerl::JspFactory;
 
 use JasPerl::Role;
 
-requires qw(get_page_context release_page_context get_expression_evaluator);
+requires qw{
+    get_page_context
+    release_page_context
+    get_compilation_context
+    release_compilation_context
+    get_expression_evaluator
+};
 
-my $DEFAULT_FACTORY = JasPerl::JspFactory::Default->new;
+my $DEFAULT_FACTORY = JasPerl::JspFactory::DefaultFactory->new;
 
 sub get_default_factory {
     return $DEFAULT_FACTORY;
@@ -22,8 +28,9 @@ sub set_default_factory {
 }
 
 package # hide from PAUSE
-    JasPerl::JspFactory::Default;
+    JasPerl::JspFactory::DefaultFactory;
 
+use JasPerl::CompilationContext;
 use JasPerl::PageContext;
 
 use JasPerl::Bean;
@@ -32,20 +39,32 @@ with qw(JasPerl::JspFactory);
 
 sub get_page_context {
     my $self = shift;
-    # TODO: cache/recycle page context?
     my $context = JasPerl::PageContext->new();
     $context->initialize(@_);
     return $context;
 }
 
 sub release_page_context {
-    warn ">>> PageContext release: @_";
     my ($self, $context) = @_;
+    # warn "$self: release $context";
+    $context->release() if $context;
+}
+
+sub get_compilation_context {
+    my $self = shift
+    my $context = JasPerl::CompilationContext->new();
+    $context->initialize(@_);
+    return $context;
+}
+
+sub release_compilation_context {
+    my ($self, $context) = @_;
+    # warn "$self: release $context";
     $context->release() if $context;
 }
 
 sub get_expression_evaluator {
-    # TODO: proper error handling
+    # FIXME
     require JasPerl::Compiler::ExpressionParser;
     return JasPerl::Compiler::ExpressionParser->new();
 }

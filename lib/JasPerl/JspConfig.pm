@@ -6,7 +6,7 @@ package JasPerl::JspConfig;
 
 # VERSION
 
-use JasPerl::Bean;
+use JasPerl::Role;
 
 sub get_buffer {
     return '4kb';
@@ -24,18 +24,23 @@ sub is_el_ignored {
     return 0;
 }
 
+sub is_trim_directive_whitespace {
+    return 0;
+}
+
 sub is_jsp_page {
     my ($self, $path) = @_;
     return $path =~ /\.jsp[fx]?$/;
 }
 
-sub is_trim_directive_whitespace {
-    return 0;
+sub is_tag_file {
+    my ($self, $path) = @_;
+    return $path =~ /\.tag[x]?$/;
 }
 
 sub is_xml {
     my ($self, $path) = @_;
-    return $path =~ /\.jspx$/
+    return $path =~ /\.(?:jsp|tag)x$/
 }
 
 1;

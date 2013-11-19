@@ -2,11 +2,9 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::Runtime;
+package JasPerl::RuntimeContext;
 
 # VERSION
-
-use JasPerl::JspConfig;
 
 use JasPerl::Role;
 
@@ -21,7 +19,7 @@ sub _build_context_path {
 }
 
 sub _build_jsp_config {
-    return JasPerl::JspConfig->new();
+    return JasPerl::RuntimeContext::DefaultJspConfig->new();
 }
 
 sub _build_server_info {
@@ -29,7 +27,20 @@ sub _build_server_info {
     return ref $_[0];
 }
 
-sub get_compiler {
+sub get_compilation_context {
+    require JasPerl::Compiler::JspCompiler;
+    require JasPerl::Compiler::TagCompiler;
+
+    my ($self, $path) = @_;
+    # TODO: get_real_path?
+    my $config = $self->get_jsp_config();
+    if ($config->is_jsp_page($path)) {
+        return JasPerl::Compiler::JspCompiler->new();
+    } elsif ($config->is_tag_file($path)) {
+        return JasPerl::Compiler::TagCompiler->new();
+    } else {
+        return; # TODO: PlainCompiler?
+    }
 }
 
 sub get_context {
@@ -46,17 +57,24 @@ sub get_real_path {
 # TODO: get_ressource/_as_stream
 # TODO: log
 
+package # hide from PAUSE
+    JasPerl::RuntimeContext::DefaultJspConfig;
+
+use JasPerl::Bean;
+
+with qw(JasPerl::JspConfig);
+
 1;
 
 __END__
 
 =head1 NAME
 
-JasPerl::Runtime - <One line description of module's purpose>
+JasPerl::RuntimeContext - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::Runtime;
+use JasPerl::RuntimeContext;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).
