@@ -11,8 +11,6 @@ use JasPerl::Util::Role;
 requires qw{
     get_page_context
     release_page_context
-    get_compilation_context
-    release_compilation_context
     get_expression_evaluator
 };
 
@@ -30,7 +28,6 @@ sub set_default_factory {
 package # hide from PAUSE
     JasPerl::JspFactory::DefaultFactory;
 
-use JasPerl::CompilationContext;
 use JasPerl::PageContext;
 
 use JasPerl::Util::Bean;
@@ -45,19 +42,6 @@ sub get_page_context {
 }
 
 sub release_page_context {
-    my ($self, $context) = @_;
-    # warn "$self: release $context";
-    $context->release() if $context;
-}
-
-sub get_compilation_context {
-    my $self = shift
-    my $context = JasPerl::CompilationContext->new();
-    $context->initialize(@_);
-    return $context;
-}
-
-sub release_compilation_context {
     my ($self, $context) = @_;
     # warn "$self: release $context";
     $context->release() if $context;

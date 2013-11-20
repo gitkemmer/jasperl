@@ -2,7 +2,7 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::CompilationContext;
+package JasPerl::Compiler::JspCompilationContext;
 
 # VERSION
 
@@ -13,58 +13,91 @@ use Module::Runtime;
 
 use constant {
     FILE_SCOPE        => 'file',
-    COMPILE_SCOPE     => 'compile',
-    APPLICATION_SCOPE => 'application',
+    MODULE_SCOPE      => 'module',
+    APPLICATION_SCOPE => 'application'
 };
 
-# page directive
 use constant {
-    AUTO_FLUSH     => "jasperl.page.autoFlush",
-    BUFFER         => "jasperl.page.buffer",
-    CONTENT_TYPE   => "jasperl.page.contentType",
-    ERROR_PAGE     => "jasperl.page.errorPage",
-    EXTENDS        => "jasperl.page.extends",
-    INFO           => "jasperl.page.info",
-    IS_EL_IGNORED  => "jasperl.page.isELIgnored",
-    IS_ERROR_PAGE  => "jasperl.page.isErrorPage",
-    IS_THREAD_SAFE => "jasperl.page.isThreadSafe",
-    PAGE_ENCODING  => "jasperl.page.pageEncoding",
-    SESSION        => "jasperl.page.session"
+    APPLICATION => 'jasperl.compiler.jspApplication',
+    CONFIG      => 'jasperl.compiler.jspConfig',
+    MODULE      => 'jasperl.compiler.jspModule',
+    OUT         => 'jasperl.compiler.jspOut'
 };
 
-# root action
+# FIXME: page directive
+use constant {
+    AUTO_FLUSH     => "jasperl.compiler.page.autoFlush",
+    BUFFER         => "jasperl.compiler.page.buffer",
+    CONTENT_TYPE   => "jasperl.compiler.page.contentType",
+    ERROR_PAGE     => "jasperl.compiler.page.errorPage",
+    EXTENDS        => "jasperl.compiler.page.extends",
+    INFO           => "jasperl.compiler.page.info",
+    IS_EL_IGNORED  => "jasperl.compiler.page.isELIgnored",
+    IS_ERROR_PAGE  => "jasperl.compiler.page.isErrorPage",
+    IS_THREAD_SAFE => "jasperl.compiler.page.isThreadSafe",
+    PAGE_ENCODING  => "jasperl.compiler.page.pageEncoding",
+    SESSION        => "jasperl.compiler.page.session"
+};
+
+# FIXME: root action
 use constant JSP_VERSION => "jasperl.compiler.page.jspVersion";
 
-my @SCOPES = ( FILE_SCOPE, PAGE_SCOPE, APPLICATION_SCOPE );
+my @SCOPES = ( FILE_SCOPE, MODULE_SCOPE, APPLICATION_SCOPE );
 
 use JasPerl::Util::Bean;
 
 with qw(JasPerl::JspContext);
 
-has [ qw(pageGenerator runtime) ] => ( is => 'rwp' );
+has [ qw(module runtimeContext) ] => ( is => 'rwp' );
 
-has config => ( is => 'lazy' );
+has jspConfig => ( is => 'lazy', clearer => 1 );
 
 has [ qw(_attributes _scopes) ] => ( is => 'lazy' );
 
-sub _build_config {
-    return $_[0]->get_runtime()->get_config();
-}
-
 sub _build__attributes {
     my $self = shift;
-    return JasPerl::CompilationContext::Attributes->new(
-        #CONFIG()      => $self->get_config(),
-        #OUT()         => $self->get_out(),
+    return JasPerl::Compiler::JspCompilationContext::Attributes->new(
+        APPLICATION() => $self->get_runtime_context(),
+        CONFIG()      => $self->get_jsp_config(),
+        MODULE()      => $self->get_module(),
+        OUT()         => $self->get_out()
     );
 }
 
 sub _build__scopes {
     return {
         FILE_SCOPE()        => $_[0]->_attributes,
-        PAGE_SCOPE()        => $_[0]->get_page_generator(),
-        APPLICATION_SCOPE() => $_[0]->get_runtime(),
+        MODULE_SCOPE()      => $_[0]->get_module(),
+        APPLICATION_SCOPE() => $_[0]->get_runtime_context(),
     };
+}
+
+sub _build_jsp_config {
+#    return $_[0]->get_runtime_context()->get_jsp_config();
+}
+
+sub initialize {
+    my ($self, $module, $context) = @_;
+
+    $self->_set_module($module);
+    $self->_set_runtime_context($context);
+    #$self->_set_out(JasPerl::PageContext::Writer->new($response, @bufargs));
+}
+
+sub release {
+    my $self = shift;
+
+    # clear pushed bodies
+    while ($self->pop_body()) { }
+    $self->get_out()->flush();
+
+    $self->_set_out(undef);
+    $self->_set_module(undef);
+    $self->_set_runtime_context(undef);
+    $self->_clear_jsp_config();
+
+    $self->_clear__attributes();
+    $self->_clear__scopes();
 }
 
 sub include {
@@ -74,8 +107,12 @@ sub include {
     $out->flush() if $flush // 1;
 
     # TODO: make absolute path
-    my $compiler = $self->get_runtime()->get_compiler($path);
+    my $compiler = $self->get_runtime_context()->get_compiler($path);
     $compiler->include($self->get_module());
+}
+
+sub handle_compile_exception {
+    my ($self, $e) = @_;
 }
 
 # JspContext interface
@@ -91,7 +128,7 @@ sub set_attribute {
     my ($self, $name, $value, $scope) = @_;
     my $object = $self->_scopes->{$scope // FILE_SCOPE}
         or JasPerl::Util::IllegalArgumentException->throw("invalid scope: $scope");
-    return $object->set_attribute($name, $value);
+    $object->set_attribute($name, $value);
 }
 
 sub remove_attribute {
@@ -243,7 +280,7 @@ sub get_out_var {
 }
 
 package # hide from PAUSE
-    JasPerl::CompilationContext::Attributes;
+    JasPerl::Compiler::JspCompilationContext::Attributes;
 
 use JasPerl::Util::Enumeration;
 
@@ -278,11 +315,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::CompilationContext - <One line description of module's purpose>
+JasPerl::Compiler::JspCompilationContext - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::CompilationContext;
+use JasPerl::Compiler::JspCompilationContext;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).

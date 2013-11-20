@@ -4,9 +4,6 @@ use warnings;
 
 package JasPerl::Compiler::GetPropertyAction;
 
-use JasPerl::Util::Functions qw(quote);
-use JasPerl::JspTagException;
-
 # VERSION
 
 use JasPerl::TagExt::Tag;
@@ -23,18 +20,19 @@ sub do_tag {
     my $ctx = $self->get_jsp_context();
     my $out = $ctx->get_out();
 
-    my $name = quote($self->get_name());
-    my $property = quote($self->get_property());
+    my $name = $ctx->get_module()->quote($self->get_name());
+    my $property = $ctx->get_module()->quote($self->get_property());
 
-    $ctx->use_module('JasPerl::Util::Beans');
+    $out->println('require JasPerl::Util::Beans;');
 
-    $out->print($self->get_out_var(), '->print('                );
-    $out->print(    'JasPerl::Util::Beans->get_property('       );
-    $out->print(        $self->get_jsp_context_var(), '->find_attribute(', $name, '), ' );
-    $out->print(        $property                               );
-    $out->print(    ')'                                         );
-    $out->print(');'                                            );
-    $out->println();
+    my $var_ctx = $self->get_var_jsp_context();
+    my $var_out = $self->get_var_out();
+
+    $out->println(
+        $var_out, '->print(JasPerl::Util::Beans->get_property(',
+        $var_ctx, '->find_attribute(', $name, '), ', $property,
+        '));'
+    );
 }
 
 1;

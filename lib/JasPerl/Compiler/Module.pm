@@ -2,13 +2,28 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::Compiler;
+package JasPerl::Compiler::Module;
 
 # VERSION
 
+use B qw(perlstring);
+
 use JasPerl::Util::Role;
 
-requires qw(compile include);
+with qw(JasPerl::Util::Attributes);
+
+requires qw(reset reset_buffer flush_buffer);
+
+requires qw(contains_pragma set_pragma add_pragma);
+
+has 'characterEncoding' => ( is => 'rw', default => 'ISO-8859-1' );
+has 'committed' => ( is => 'rwp', boolean => 1 );
+has 'perlVersion' => ( is => 'rw', default => '5.010' );
+has 'writer';
+
+sub quote {
+    return defined $_[0] ? perlstring($_[0]) : 'undef';
+}
 
 1;
 
@@ -16,11 +31,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::Compiler - <One line description of module's purpose>
+JasPerl::Compiler::Module - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::Compiler;
+use JasPerl::Compiler::Module;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).
@@ -66,7 +81,7 @@ Please report bugs or feature requests to Thomas Kemmer <tkemmer@computer.org>.
 
 =head1 SEE ALSO
 
-L<JasPerl::Compiler>
+L<JasPerl>
 
 =head1 AUTHOR
 

@@ -39,9 +39,9 @@ if (@ARGV) {
 
 package JasPerlCRuntime;
 
-use JasPerl::Bean;
+use JasPerl::Util::Bean;
 
-with qw(JasPerl::Runtime);
+with qw(JasPerl::RuntimeContext);
 
 sub get_request_dispatcher {
 }

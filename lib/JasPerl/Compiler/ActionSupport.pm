@@ -33,6 +33,12 @@ my %BODY_CONTENT = (
 
 use JasPerl::Util::Role;
 
+has var => ( is => 'ro', default => '$self' );
+
+has var_jsp_context => ( is => 'ro', default => '$ctx' );
+
+has var_out => ( is => 'ro', default => '$out' );
+
 sub _make_attributes {
     return { map { $_->{name} => $_->{value} } @{$_[0]} };
 }
