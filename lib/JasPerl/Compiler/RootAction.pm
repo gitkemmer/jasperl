@@ -4,7 +4,7 @@ use warnings;
 
 package JasPerl::Compiler::RootAction;
 
-use JasPerl::Compiler::JspCompilationContext;
+use JasPerl::Compiler::CompilationContext;
 
 # VERSION
 
@@ -20,7 +20,7 @@ has version => ( required => 1 );
 sub do_tag {
     my $self = shift;
     $self->get_jsp_context()->set_attribute(
-        JasPerl::Compiler::JspCompilationContext::JSP_VERSION,
+        JasPerl::Compiler::CompilationContext::JSP_VERSION,
         $self->get_version()
     );
     $self->do_body();

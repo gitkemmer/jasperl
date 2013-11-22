@@ -5,7 +5,7 @@ use warnings;
 package JasPerl::Compiler::PageGenerator;
 
 use JasPerl::Compiler::CustomAction;
-use JasPerl::Compiler::JspCompilationContext;
+use JasPerl::Compiler::CompilationContext;
 use JasPerl::Compiler::RootAction;
 use JasPerl::Compiler::StandardActions;
 use JasPerl::TagExt::BodyContent;
@@ -65,7 +65,7 @@ has writer => ( is => 'ro', default => sub { \*STDOUT } );
 has context => ( is => 'lazy' );
 
 sub _build_context {
-    return JasPerl::Compiler::JspCompilationContext->new();
+    return JasPerl::Compiler::CompilationContext->new();
 }
 
 sub generate {
@@ -89,7 +89,7 @@ sub generate {
     $ctx->add_method('_jspx_main', $main);
 
     my $cname = 'Local::JSP::date_jsp'; # FIXME
-    my $ctype = quote($ctx->get_attribute(JasPerl::Compiler::JspCompilationContext::CONTENT_TYPE) || $CONTENT_TYPE);
+    my $ctype = quote($ctx->get_attribute(JasPerl::Compiler::CompilationContext::CONTENT_TYPE) || $CONTENT_TYPE);
     my $session = $ctx->get_attribute('session');
 
     my @cargs = (

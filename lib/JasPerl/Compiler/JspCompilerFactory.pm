@@ -2,51 +2,30 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::RuntimeContext;
+package JasPerl::Compiler::JspCompilerFactory;
 
 # VERSION
 
+my $DEFAULT_FACTORY;
+
 use JasPerl::Util::Role;
 
-with qw(JasPerl::Util::Attributes);
+requires qw{
+    get_compilation_context
+    release_compilation_context
+};
 
-has [ qw(jspConfig contextPath serverInfo) ];
-
-requires qw(get_request_dispatcher);
-
-sub _build_context_path {
-    return '';
+sub get_default_factory {
+    return $DEFAULT_FACTORY ||= do {
+        require JasPerl::Compiler::DefaultCompilerFactory;
+        JasPerl::Compiler::DefaultCompilerFactory->new();
+    };
 }
 
-sub _build_jsp_config {
-    return JasPerl::RuntimeContext::DefaultJspConfig->new();
+sub set_default_factory {
+    my ($class, $factory) = @_;
+    $DEFAULT_FACTORY = $factory;
 }
-
-sub _build_server_info {
-    # TODO: NAME/VERSION
-    return ref $_[0];
-}
-
-sub get_context {
-    return $_[0];
-}
-
-sub get_mime_type {
-}
-
-sub get_real_path {
-}
-
-# TODO: get_named_dispatcher
-# TODO: get_ressource/_as_stream
-# TODO: log
-
-package # hide from PAUSE
-    JasPerl::RuntimeContext::DefaultJspConfig;
-
-use JasPerl::Util::Bean;
-
-with qw(JasPerl::JspConfig);
 
 1;
 
@@ -54,11 +33,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::RuntimeContext - <One line description of module's purpose>
+JasPerl::Compiler::JspCompilerFactory - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::RuntimeContext;
+use JasPerl::Compiler::JspCompilerFactory;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).

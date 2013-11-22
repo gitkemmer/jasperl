@@ -2,7 +2,7 @@ use 5.010;
 use strict;
 use warnings;
 
-package JasPerl::RuntimeContext;
+package JasPerl::Compiler::JspCompiler;
 
 # VERSION
 
@@ -10,43 +10,13 @@ use JasPerl::Util::Role;
 
 with qw(JasPerl::Util::Attributes);
 
-has [ qw(jspConfig contextPath serverInfo) ];
+requires qw(compile include);
 
-requires qw(get_request_dispatcher);
-
-sub _build_context_path {
-    return '';
-}
+has [ qw(context jspConfig sourcePath) ];
 
 sub _build_jsp_config {
-    return JasPerl::RuntimeContext::DefaultJspConfig->new();
+    return $self->get_context()->get_jsp_config();
 }
-
-sub _build_server_info {
-    # TODO: NAME/VERSION
-    return ref $_[0];
-}
-
-sub get_context {
-    return $_[0];
-}
-
-sub get_mime_type {
-}
-
-sub get_real_path {
-}
-
-# TODO: get_named_dispatcher
-# TODO: get_ressource/_as_stream
-# TODO: log
-
-package # hide from PAUSE
-    JasPerl::RuntimeContext::DefaultJspConfig;
-
-use JasPerl::Util::Bean;
-
-with qw(JasPerl::JspConfig);
 
 1;
 
@@ -54,11 +24,11 @@ __END__
 
 =head1 NAME
 
-JasPerl::RuntimeContext - <One line description of module's purpose>
+JasPerl::Compiler::JspCompiler - <One line description of module's purpose>
 
 =head1 SYNOPSIS
 
-use JasPerl::RuntimeContext;
+use JasPerl::Compiler::JspCompiler;
 
 # Brief but working code example(s) here, showing the most common
 # usage(s).

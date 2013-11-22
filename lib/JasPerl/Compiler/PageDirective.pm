@@ -4,7 +4,7 @@ use warnings;
 
 package JasPerl::Compiler::PageDirective;
 
-use JasPerl::Compiler::JspCompilationContext;
+use JasPerl::Compiler::CompilationContext;
 
 # VERSION
 
@@ -39,49 +39,49 @@ sub do_tag {
         my ($buffer) = $self->get_buffer() =~ /^(\d+)kb$/
             or die "invalid buffer '", $self->get_buffer(), "'";
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::BUFFER,
+            JasPerl::Compiler::CompilationContext::BUFFER,
             $buffer * 1024
         );
     }
 
     if ($self->has_content_type()) {
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::CONTENT_TYPE,
+            JasPerl::Compiler::CompilationContext::CONTENT_TYPE,
             $self->get_content_type()
         );
     }
 
     if ($self->has_error_page()) {
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::ERROR_PAGE,
+            JasPerl::Compiler::CompilationContext::ERROR_PAGE,
             $self->get_error_page()
         );
     }
 
     if ($self->has_info()) {
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::INFO,
+            JasPerl::Compiler::CompilationContext::INFO,
             $self->get_info()
         );
     }
 
     if ($self->has_page_encoding()) {
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::PAGE_ENCODING,
+            JasPerl::Compiler::CompilationContext::PAGE_ENCODING,
             $self->get_page_encoding()
         );
     }
 
     if ($self->has_auto_flush()) {
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::AUTO_FLUSH,
+            JasPerl::Compiler::CompilationContext::AUTO_FLUSH,
             $self->is_auto_flush()
         );
     }
 
     if ($self->has_session()) {
         $ctx->set_attribute(
-            JasPerl::Compiler::JspCompilationContext::SESSION,
+            JasPerl::Compiler::CompilationContext::SESSION,
             $self->is_session()
         );
     }
